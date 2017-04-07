@@ -358,7 +358,7 @@ class TestXFormViewSet(TestAbstractViewSet):
         request = self.factory.patch('/', data=updated_post_data, **self.extra)
         response = view(request, pk=xform.id)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data.get('version'), '2017040603')
+        self.assertEqual(response.data.get('version'), date_part + '03')
 
     def test_instances_with_geopoints_true_for_instances_with_geopoints(self):
         with HTTMock(enketo_mock):
@@ -2244,8 +2244,7 @@ class TestXFormViewSet(TestAbstractViewSet):
                     "'transportation_2015_01_07' must match the existing "
                     "forms' id_string 'transportation_2011_07_25', if form "
                     "has submissions.")
-                self.assertEqual(response.data.get(
-                    'text'), expected_response)
+                self.assertEqual(response.data.get('text'), expected_response)
 
             # try to replace a file whose id_string hasn't been set
             path = os.path.join(
